@@ -147,30 +147,6 @@ Promise.defer =Promise.deferred = function(){
 Promise.prototype.catch = function(errFn){
     return this.then(null,errFn)
 }
-Promise.all = function(values){ console.log('my-promise')
-    return new Promise((resolve,reject)=>{
-        let arr = []; // 最终结果的数组
-        let index = 0;
-        function processData(key,value){
-            index++;
-            arr[key] = value;
-            if(index === values.length){ // 如果最终的结果的个数和values的个数相等 抛出结果即可
-                resolve(arr);
-            }
-        }
-        for(let i = 0;i<values.length;i++){
-            let current = values[i];
-            if(current && current.then && typeof current.then == 'function'){
-                // promise
-                current.then(y=>{
-                    processData(i,y);
-                },reject)
-            }else{
-               processData(i,current);
-            }
-        }
-    })
-}
 module.exports = Promise;
 // npm install -g promises-aplus-tests
 // promises-aplus-tests promise.js
