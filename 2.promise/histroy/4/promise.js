@@ -1,11 +1,9 @@
-console.log('my promise')
 function Promise (executor){
-    // 在promise内部定义一个状态 当前promise的状态
     let self = this;
     self.value = undefined;
     self.reason = undefined
-    self.status = 'pending'; // 默认promise的状态是pengding
-    self.onResolevedCallbacks = []; // 存放所有成功的回调
+    self.status = 'pending'; 
+    self.onResolevedCallbacks = []; 
     self.onRejectedCallbacks = []; // 存放所有失败的回调
     function resolve(value){
         if(self.status === 'pending'){
@@ -27,22 +25,12 @@ function Promise (executor){
     }catch(e){
         reject(e); // 说明失败了
     }
+   
 }
-// 这个规范 是通用的  我们的promise 可能会在别的promise中使用
-// let index = 2;
-// Object.defineProperty(x,then,{
-//     get(){
-//         index--;
-//         if(index === 0){
-//             throw new Error();
-//         }
-//     }
-// })
 function resolvePromise(promise2,x,resolve,reject){ // 判断x 是不是promise 
-    
-    // if(promise2 === x){ // 表示防止自己等待自己
-    //     return reject(new TypeError('循环引用了'));
-    // }
+    if(promise2 === x){ // 表示防止自己等待自己
+        return reject(new TypeError('循环引用了'));
+    }
     // 保证当前x 是一个引用类型
     let called; // 表示当前有没有被调用过
     if((x!==null && typeof x === 'object') || typeof x === 'function'){
@@ -64,7 +52,7 @@ function resolvePromise(promise2,x,resolve,reject){ // 判断x 是不是promise
             }else{ // 当前这个then是一个对象 普通对象
                 resolve(x); // {a:1}
             }
-        }catch(e){ // 
+        }catch(e){ //  防治别人的库中既调用了成功又有失败
             if(called) return;
             called = true;
             reject(e);
@@ -75,7 +63,9 @@ function resolvePromise(promise2,x,resolve,reject){ // 判断x 是不是promise
 }
 Promise.prototype.then = function(onFulfilled,onRejected){
     onFulfilled = typeof onFulfilled === 'function'?onFulfilled : value=> value;
-    onRejected = typeof onRejected === 'function'? onRejected:err=>{throw err}
+    onRejected = typeof onRejected === 'function'? onRejected:function(err){
+        throw err;
+    }
     let self = this;
     // 调用then后需要再次 返回一个全新的promise
     // 我需要拿到当前then方法 成功或失败执行后的结果
@@ -96,6 +86,7 @@ Promise.prototype.then = function(onFulfilled,onRejected){
                     let x = onRejected(self.reason);
                     resolvePromise(promise2,x,resolve,reject);
                 }catch(e){
+                    console.log('err')
                     reject(e);
                 }
             },0)
@@ -125,17 +116,6 @@ Promise.prototype.then = function(onFulfilled,onRejected){
         }
     });
     return promise2;
- 
-}
-// 让你实现一个promise的延迟对象 defer
-Promise.defer =Promise.deferred = function(){
-    let dfd = {};
-    dfd.promise = new Promise((resolve,reject)=>{
-        dfd.resolve = resolve;
-        dfd.reject = reject;
-    })
-    return dfd;
 }
 module.exports = Promise;
-//npm install -g promises-aplus-tests
-// promises-aplus-tests promise.js
+
