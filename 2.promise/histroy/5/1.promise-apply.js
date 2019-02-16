@@ -6,7 +6,7 @@ let p = new Promise(function(resolve,reject){
     reject(1000);    
 });
 // 值的穿透
-p.finally(()=>{ // node版本的问题
+p.finally(()=>{ // node版本的问题 8以上
     console.log('hello');
     return 100;
 }).catch(err=>{

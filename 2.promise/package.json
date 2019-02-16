@@ -1,0 +1,16 @@
+{
+  "name": "2.promise",
+  "version": "1.0.0",
+  "description": "",
+  "main": "1.promise-apply.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.5.3",
+    "mz": "^2.7.0"
+  }
+}
