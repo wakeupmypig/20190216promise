@@ -15,9 +15,9 @@ vue学习 vue全家桶。。。。
 - promise 用法  Promise类 静态方法（Promise.xxx）  原型上的方法 (new Promise.xxx)
     - (Promise.all Promise.resolve,Promise.reject,Promise.race)
     - (then catch finally)
-- 封装promise
-- generator
-- async + await
+- 封装promise  完成
+- generator ＋ co的用法
+- async + await 配合使用一下
 
 
 ## 会看地址
@@ -27,3 +27,7 @@ http://video.zhufengpeixun.cn/ 进入班级在看视频
 周一周三 晚上 8-10 点  周日全天 9.30－13:00  15:00-18:00
 第一期 优惠1000 参加过 js ／ node ＝> 优惠 1500  在线 8998  实体 10998
 时长三个月 （流原理）
+
+## 课程可以评价
+
+

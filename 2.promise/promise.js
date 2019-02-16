@@ -59,7 +59,7 @@ function resolvePromise(promise2,x,resolve,reject){ // 判断x 是不是promise
             }else{ // 当前这个then是一个对象 普通对象
                 resolve(x); // {a:1}
             }
-        }catch(e){
+        }catch(e){ // 
             if(called) return;
             called = true;
             reject(e);
@@ -121,3 +121,4 @@ Promise.prototype.then = function(onFulfilled,onRejected){
  
 }
 module.exports = Promise;
+
